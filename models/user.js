@@ -1,7 +1,18 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const Schema = mongoose.Schema;
-const users = new Schema(
+const pharmacist = new Schema(
+  {
+    pharmacie_name: { type: String },
+    location: { type: String },
+    bio: { type: String },
+    advices: [{ type: Schema.Types.ObjectId, ref: "advices" }],
+    medicines: [{ type: Schema.Types.ObjectId, ref: "medicines" }],
+  },
+  { timestamp: true }
+);
+
+const user = new Schema(
   {
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
@@ -21,15 +32,23 @@ const users = new Schema(
       },
     },
     password: { type: String, required: true },
-    following: [{ type: Schema.Types.ObjectId, required: true, ref: "pharmacist" }],
+    pharmacist: pharmacist,
+
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "user.pharmacist",
+      },
+    ],
   },
   { timestamp: true }
 );
 
-users.pre("save", async function (next) {
+user.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
   next();
 });
-export default mongoose.model("users", users);
+export default mongoose.model("user", user);
