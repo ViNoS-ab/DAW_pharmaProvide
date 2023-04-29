@@ -50,7 +50,7 @@ export async function signup(req, res) {
 export async function login(req, res) {
   const { email, password } = req.body;
   try {
-    const user = email && (await User.findOne({ email: email }));
+    const user = email && (await User.findOne({ email: email + "" }));
     if (!user)
       return res
         .status(404)
