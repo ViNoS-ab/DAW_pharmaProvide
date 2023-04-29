@@ -6,8 +6,8 @@ const pharmacist = new Schema(
     pharmacie_name: { type: String },
     location: { type: String },
     bio: { type: String },
-    advices: [{ type: Schema.Types.ObjectId, ref: "advices" }],
-    medicines: [{ type: Schema.Types.ObjectId, ref: "medicines" }],
+    advices: [{ type: Schema.Types.ObjectId, ref: "advice" }],
+    medicines: [{ type: Schema.Types.ObjectId, ref: "medicine" }],
   },
   { timestamp: true }
 );
@@ -41,6 +41,14 @@ const user = new Schema(
         ref: "user.pharmacist",
       },
     ],
+    verificationCode: {
+      type: String,
+      unique: true,
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamp: true }
 );
