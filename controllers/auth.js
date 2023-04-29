@@ -10,7 +10,7 @@ import { sendMail } from "../utils/email.js";
 export async function signup(req, res) {
   const { email } = req.body;
   try {
-    const exist = await User.findOne({ email: email });
+    const exist = await User.findOne({ email: email + "" });
     if (exist)
       return res.status(400).json({
         success: false,
