@@ -7,10 +7,10 @@ const advices = new Schema(
     pharmacist: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "user.pharmacist",
+      ref: "user",
     },
-    upvotes: [{ type: Schema.Types.ObjectId, ref: "user.pharmacist" }],
-    downvotes: [{ type: Schema.Types.ObjectId, ref: "user.pharmacist" }],
+    upvotes: [{ type: Schema.Types.ObjectId, ref: "user" }],
+    downvotes: [{ type: Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamp: true }
 );
